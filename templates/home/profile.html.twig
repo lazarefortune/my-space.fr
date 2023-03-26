@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+Mon compte
+{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+
+{#        profile #}
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <h1>{{ 'Profile'|trans }}</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-9">
+                <h3>
+                    {{ 'My informations'|trans }}
+                </h3>
+                {% include 'layouts/_flash-message.html.twig' %}
+                <div class="card">
+                    {{ form_start(form) }}
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-2">
+                                <div class="form-group">
+                                    {{ form_label(form.fullname) }}
+                                    {{ form_widget(form.fullname, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <div class="form-group">
+                                    {{ form_label(form.email) }}
+                                    {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <div class="form-group">
+                                    {{ form_label(form.pseudo) }}
+                                    {{ form_widget(form.pseudo, {'attr': {'class': 'form-control'}}) }}
+                                    <small class="form-text text-muted">
+                                        Votre pseudo sera affiché sur toutes les histoires que vous écrirez.
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary">{{ 'Save'|trans }}</button>
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+            <div class="col-md-3">
+                <h5>
+                    {{ 'You are not a premium member'|trans }} ?
+                </h5>
+                <p>
+                    {{ 'premium-question'|trans }}
+                </p>
+
+                <a href="" class="btn btn-success">{{ 'Become a premium member'|trans }}</a>
+
+            </div>
+        </div>
+
+{#        articles #}
+
+
+
+    </div>
+
+{% endblock %}
+

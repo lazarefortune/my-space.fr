@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Story{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 my-4 mx-auto">
+                <div class="card">
+                        <h3 class="card-title text-center mt-2">
+                            Il est temps de raconter <strong>ton</strong> histoire
+                        </h3>
+                        <div class="card-body">
+
+                            {{ include('story/_form.html.twig') }}
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

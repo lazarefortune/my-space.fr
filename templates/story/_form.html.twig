@@ -1,0 +1,32 @@
+{{ form_start(form) }}
+
+    {% include 'layouts/_flash-message.html.twig' %}
+
+    <div class="form-group mb-4">
+        {{ form_label(form.title) }}
+        {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.title) }}
+    </div>
+
+    <div class="form-group mb-4">
+        {{ form_label(form.description) }}
+        {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.description) }}
+    </div>
+
+    <div class="form-group mb-4">
+        {{ form_label(form.privacy) }}
+        {{ form_widget(form.privacy, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.privacy) }}
+    </div>
+
+    <div class="form-group mb-4">
+        <div class="form-check form-switch">
+            {{ form_label(form.isDraft) }}
+            {{ form_widget(form.isDraft, {'attr': {'class': 'form-check-input me-2'}}) }}
+            {{ form_errors(form.isDraft) }}
+        </div>
+    </div>
+
+    <button class="btn btn-primary" id="story_submit">{{ button_label|default('Partager mon histoire') }}</button>
+{{ form_end(form) }}

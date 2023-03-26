@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7 mx-auto mt-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="my-0 text-center">Inscrivez-vous !</h3>
+                    </div>
+                    <div class="card-body">
+                        {% for flash_error in app.flashes('verify_email_error') %}
+                            <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+                        {% endfor %}
+
+
+
+                        {{ form_start(registrationForm) }}
+
+                        {% include 'layouts/_flash-message.html.twig' %}
+
+                        <div class="form-group mb-2">
+                            {{ form_label(registrationForm.fullname) }}
+                            {{ form_widget(registrationForm.fullname, {
+                                attr: {
+                                    class: 'form-control'
+                                }
+                            }) }}
+                            {{ form_errors(registrationForm.fullname) }}
+                        </div>
+
+                        <div class="form-group mb-2">
+                            {{ form_label(registrationForm.email) }}
+                            {{ form_widget(registrationForm.email, {
+                                attr: {
+                                    class: 'form-control'
+                                }
+                            }) }}
+                            {{ form_errors(registrationForm.email) }}
+                        </div>
+
+                        <div class="form-group mb-2">
+                            {{ form_label(registrationForm.plainPassword) }}
+                            {{ form_widget(registrationForm.plainPassword, {
+                                attr: {
+                                    class: 'form-control'
+                                }
+                            }) }}
+                            {{ form_errors(registrationForm.plainPassword) }}
+                        </div>
+
+                        <div class="form-group mb-2">
+                            {{ form_label(registrationForm.agreeTerms) }}
+                            {{ form_widget(registrationForm.agreeTerms, {
+                                attr: {
+                                    class: 'form-check-input'
+                                }
+                            }) }}
+                            {{ form_errors(registrationForm.agreeTerms) }}
+                        </div>
+
+                        <div class="form-group mb-2">
+                            <button type="submit" class="btn btn-primary">S'inscrire</button>
+                        </div>
+
+                        <div class="form-group mb-2">
+                            <a href="{{ path('app_login') }}">Déjà inscrit ? Connectez-vous !</a>
+                        </div>
+
+                        {{ form_end(registrationForm) }}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

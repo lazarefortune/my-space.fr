@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="row mt-4">
+        <h3>
+            Mes histoires <strong>publiques</strong>
+        </h3>
+
+        {% for story in app.user.stories %}
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title text-uppercase">
+                        {{ story.title }}
+                    </h6>
+                    <div class="card-text">
+                        {{ story.description | raw }}
+                    </div>
+                    <div class="card-text">
+                        Publiée le {{ story.createdAt | date('d/m/Y') }} à {{ story.createdAt | date('H:i') }}
+                    </div>
+                    <div class="card-text">
+                        {% if story.privacy == 'public' %}
+                        <span class="badge bg-success">Publique</span>
+                        {% elseif story.privacy == 'private' %}
+                            <span class="badge bg-danger">Privée</span>
+                        {% elseif story.privacy == 'friends' %}
+                            <span class="badge bg-warning">Amis</span>
+                        {% endif %}
+                    </div>
+                    <div class="card-text">
+                        <a href="{{ path('app_story_show', {'id': story.id}) }}" class="btn btn-primary">Voir</a>
+                        <a href="{{ path('app_story_edit', {'id': story.id}) }}" class="btn btn-warning">Modifier</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
+

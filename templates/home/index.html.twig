@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+
+<div class="hero vh-100 d-flex align-items-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7 col-12">
+                <h1 class="text-uppercase display-4 text-white hero__title">
+                    Partagez <span>vos histoires</span>
+                </h1>
+                <p class="text-white hero__subtitle">
+                    Parce que nous avons tous des histoires à raconter, ce site vous permet de partager vos histoires avec les autres membres de la communauté.
+                </p>
+                <a href="{{ path('app_story_new') }}" class="btn btn-primary hero__btn">
+                    Raconter mon histoire
+                </a>
+                <a href="{{ path('app_story_index') }}" class="btn btn-outline-primary hero__outline__btn">
+                    Lire les histoires
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row mt-4">
+        <div class="col-md-6 col-12">
+            <div class="jumbotron">
+                <h1 class="display-4">
+                    Bienvenue sur le site de partage de vos <strong>histoires</strong>
+                </h1>
+                <p class="lead">
+                    Parce que nous avons tous des histoires à raconter, ce site vous permet de partager vos histoires avec les autres membres de la communauté.
+                </p>
+                <hr class="my-4">
+                <p>
+                    Votre histoire est unique, elle mérite d'être partagée.
+                </p>
+                <a class="btn btn-primary btn-lg" href="{{ path('app_story_new') }}" role="button">
+                    Raconter mon histoire
+                </a>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-12 mt-4 mt-md-0">
+            <h3 class="text-center">
+                Les dernières histoires
+            </h3>
+            <div class="list-group mt-4">
+                {% for story in stories|slice(0, 2) %}
+                    <a href="{{ path('app_story_show', {'id': story.id}) }}" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1 text-uppercase">
+                                {{ story.title }}
+                            </h5>
+                            <small>
+                                {{ story.createdAt|date('d/m/Y') }}
+                            </small>
+                        </div>
+                        <p class="mb-1">
+                            {{ story.description | raw }}...
+                        </p>
+                        <small>
+                            Auteur :
+                            <strong>{{ story.author.fullname }}</strong>
+                        </small>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <h3>Les histoires les plus populaires</h3>
+
+        {% for story in stories|slice(2) %}
+        <div class="col-md-6 col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="text-uppercase">
+                        {{ story.title }}
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <p>
+                        {{ story.description | raw }}
+                    </p>
+                    <a href="{{ path('app_story_show', {'id': story.id}) }}" class="btn btn-primary">
+                        Lire la suite
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+{% endblock %}
