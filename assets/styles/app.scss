@@ -21,6 +21,7 @@ $warning-color: #ffcc00;
 $success-color: #5fe67c;
 $info-color: #2f42ea;
 
+$topNavBarHeight: 4rem;
 
 body {
     //background-color: lightgray;
@@ -44,6 +45,10 @@ a {
     color: inherit;
 }
 
+/* ====== Main ====== */
+main{
+    margin-top: 4rem;
+}
 /*===== Ckeditor style =====*/
 
 .cke{
@@ -76,14 +81,10 @@ a {
 
             &:hover {
                 background-color: $first-color;
-
             }
 
             &.active {
                 background-color: $first-color;
-                &.hover {
-                    background-color: $first-color;
-                }
             }
         }
     }

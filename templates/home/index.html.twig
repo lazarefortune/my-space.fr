@@ -3,7 +3,7 @@
 {% block title %}Accueil{% endblock %}
 
 {% block body %}
-
+<!-- Hero -->
 <div class="hero vh-100 d-flex align-items-center">
     <div class="container">
         <div class="row">
@@ -24,6 +24,49 @@
         </div>
     </div>
 </div>
+<!-- End Hero -->
+
+<!-- Section stories -->
+<section id="stories" class="mt-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="text-center text-uppercase">
+                    Les dernières histoires
+                </h2>
+            </div>
+        </div>
+        <div class="row g-4">
+            {% for story in stories|slice(0, 4) %}
+            <div class="col-md-6 col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="text-uppercase">
+                            {{ story.title }}
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            {{ story.description | raw }}
+                        </p>
+                        <a href="{{ path('app_story_show', {'id': story.id}) }}" class="btn btn-primary">
+                            Lire la suite
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="row">
+            <div class="col-12 text-center">
+                <a href="{{ path('app_story_index') }}" class="btn btn-primary mt-4">
+                    Découvrir toutes les histoires  {{ icon('arrow-right') }}
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End Section stories -->
 
 <div class="container">
     <div class="row mt-4">

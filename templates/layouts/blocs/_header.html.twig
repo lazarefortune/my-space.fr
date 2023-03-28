@@ -4,7 +4,7 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarColor03">
+        <div class="collapse navbar-collapse mt-4 mt-lg-0 " id="navbarColor03">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
                     <a class="nav-link {{ menu_active('app_home') }}" href="{{ path('app_home') }}">
@@ -27,6 +27,7 @@
                 </li>
             </ul>
 
+            <!-- user menu -->
             {% if app.user %}
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
@@ -56,8 +57,8 @@
                     </li>
                 </ul>
             {% endif %}
-
-{#            change language#}
+            <!-- end user menu -->
+            <!-- change language -->
             <ul class="navbar-nav">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
@@ -75,13 +76,15 @@
                     </div>
                 </li>
             </ul>
-
+            <!-- end change language -->
+            <!-- search -->
             <form class="d-flex">
                 <label>
                     <input class="form-control me-sm-2" type="search" placeholder=" {{ 'A question'|trans }} ?">
                 </label>
-                <button class="btn btn-secondary my-2 my-sm-0" type="submit">{{ 'Search'|trans }}</button>
+                <button class="btn btn-secondary my-0 my-sm-0" type="submit">{{ 'Search'|trans }}</button>
             </form>
+            <!-- end search -->
         </div>
     </div>
 </nav>
