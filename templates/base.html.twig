@@ -16,13 +16,13 @@
         {% endblock %}
     </head>
     <body>
-        {% include 'layouts/blocs/_header.html.twig' %}
+        {% include 'partials/_header.html.twig' %}
 
         <main>
             {% block body %}{% endblock %}
         </main>
 
-{#        {% include 'layouts/blocs/_footer.html.twig' %}#}
+        {% include 'partials/_footer.html.twig' %}
 
         {% block javascripts_footer %}
         {% endblock %}

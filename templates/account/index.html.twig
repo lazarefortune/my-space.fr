@@ -1,25 +1,23 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-Mon compte
+    {{ 'Profile'|trans }}
 {% endblock %}
 
 {% block body %}
 
     <div class="container">
-
-{#        profile #}
         <div class="row mt-4">
-            <div class="col-md-12">
+            <div class="col-12">
                 <h1>{{ 'Profile'|trans }}</h1>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-12 col-lg-9">
                 <h3>
                     {{ 'My informations'|trans }}
                 </h3>
-                {% include 'layouts/_flash-message.html.twig' %}
+                {% include 'layouts/_flash_message.html.twig' %}
                 <div class="card">
                     {{ form_start(form) }}
                     <div class="card-body">
@@ -53,23 +51,18 @@ Mon compte
                     {{ form_end(form) }}
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 mt-3 mt-lg-0">
                 <h5>
-                    {{ 'You are not a premium member'|trans }} ?
+                    {{ 'premium.question'|trans }} ?
                 </h5>
                 <p>
-                    {{ 'premium-question'|trans }}
+                    {{ 'premium.description'|trans }}
                 </p>
 
-                <a href="" class="btn btn-success">{{ 'Become a premium member'|trans }}</a>
+                <a href="" class="btn btn-success">{{ 'premium.btn-label'|trans }}</a>
 
             </div>
         </div>
-
-{#        articles #}
-
-
-
     </div>
 
 {% endblock %}

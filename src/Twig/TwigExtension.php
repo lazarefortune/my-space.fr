@@ -14,6 +14,13 @@ class TwigExtension extends AbstractExtension
         ];
     }
 
+    /**
+     * Affiche une icône
+     * @param string $icon
+     * @param string|null $size
+     * @param string|null $attrs
+     * @return string
+     */
     public function showIcon(string $icon, ?string $size = null, ?string $attrs = null): string
     {
         $attributes = '';
@@ -31,8 +38,10 @@ class TwigExtension extends AbstractExtension
     }
 
     /**
-     * Ajout une class active pour les éléments actifs du menu.
-     *
+     * Ajoute une classe active au menu en fonction de la route
+     * @param array $context
+     * @param string $route
+     * @return string
      */
     public function menuActive(array $context, string $route): string
     {

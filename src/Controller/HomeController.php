@@ -101,7 +101,7 @@ class HomeController extends AbstractController
             return $this->redirectToRoute('app_profile');
         }
 
-        return $this->render('home/profile.html.twig', [
+        return $this->render('account/index.html.twig', [
             'form' => $form->createView(),
         ]);
     }

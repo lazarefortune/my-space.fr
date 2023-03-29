@@ -46,9 +46,12 @@ a {
 }
 
 /* ====== Main ====== */
+
 main{
     margin-top: 4rem;
+    min-height: 100vh;
 }
+
 /*===== Ckeditor style =====*/
 
 .cke{
@@ -57,7 +60,6 @@ main{
 }
 
 /*===== Navbar style =====*/
-
 
 .navbar {
     background-color: $first-color;

@@ -4,17 +4,68 @@ Logout: Déconnexion
 Register: Inscription
 A question: Une question
 Search: Recherche
-Home: Accueil
-Stories: Histoires
 Story: Histoire
-About: À propos
-Contact: Contact
 My informations: Mes informations
 Profile: Profil
 Save: Sauvegarder
 Cancel: Annuler
 Edit: Modifier
 Delete: Supprimer
-You are not a premium member: Vous n'êtes pas membre premium
-Become a premium member: Devenir membre premium
-premium-question: Vous pouvez devenir membre premium et profiter de tous les avantages du site
+premium:
+    title: Devenir membre premium
+    content: Vous pouvez devenir membre premium et profiter de tous les avantages du site
+    question: Vous n'êtes pas membre premium
+    btn-label: Devenir membre premium
+    description: Vous pouvez devenir membre premium et profiter de tous les avantages du site
+
+#premium-question: Vous n'êtes pas membre premium
+#premium-btn-label: Devenir membre premium
+#premium-description: Vous pouvez devenir membre premium et profiter de tous les avantages du site
+
+layout:
+    menu:
+        admin: 'messages'
+        home: 'messages'
+        stories: 'messages'
+        about: 'messages'
+        contact: 'messages'
+        account: 'messages'
+        dashboard: 'messages'
+    about:
+        title: 'messages'
+        content: 'messages'
+    contact:
+        title: 'messages'
+        content: 'messages'
+    user:
+        username: 'messages'
+        lastname: 'messages'
+        firstname: 'messages'
+        email: 'messages'
+        password: 'messages'
+    premium:
+        title: 'messages'
+        content: 'messages'
+    story:
+        title: 'messages'
+        content: 'messages'
+# Header - Menu
+Home: Accueil
+Stories: Histoires
+About: À propos
+Contact: Contact
+MyAccount: Mon compte
+Dashboard: Tableau de bord
+
+
+
+# User Account
+Username: Nom d'utilisateur
+Lastname: Nom
+Firstname: Prénom
+Email: Email
+Password: Mot de passe
+
+
+# Contact
+

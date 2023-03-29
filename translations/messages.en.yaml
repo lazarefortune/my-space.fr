@@ -1,2 +1,14 @@
 J'aime Symfony: Symfony is great
-premium-question: You can become a premium member and enjoy all the advantages of the site
+premium-question: You are not a premium member
+premium-btn-label: Become a premium member
+premium-description: You can become a premium member and enjoy all the advantages of the site
+
+# Header - Menu
+Home: Home
+Stories: Stories
+About: About
+Contact: Contact
+MyAccount: My account
+Dashboard: Dashboard
+
+# About
