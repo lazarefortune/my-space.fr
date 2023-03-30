@@ -18,9 +18,9 @@ premium:
     btn-label: Devenir membre premium
     description: Vous pouvez devenir membre premium et profiter de tous les avantages du site
 
-#premium-question: Vous n'êtes pas membre premium
-#premium-btn-label: Devenir membre premium
-#premium-description: Vous pouvez devenir membre premium et profiter de tous les avantages du site
+premium-question: Vous n'êtes pas membre premium
+premium-btn-label: Devenir membre premium
+premium-description: Vous pouvez devenir membre premium et profiter de tous les avantages du site
 
 layout:
     menu:
