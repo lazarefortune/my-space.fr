@@ -11,83 +11,87 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[Route('/histoires')]
+#[Route( '/histoires' )]
 class StoryController extends AbstractController
 {
-    #[Route('/', name: 'app_story_index', methods: ['GET'])]
-    public function index(StoryRepository $storyRepository): Response
+    #[Route( '', name: 'app_story_index', methods: ['GET'] )]
+    public function index( StoryRepository $storyRepository ) : Response
     {
-        return $this->render('story/index.html.twig', [
+        return $this->render( 'story/index.html.twig', [
             'stories' => $storyRepository->findAll(),
-        ]);
+        ] );
     }
 
-    #[Route('/nouvelle', name: 'app_story_new', methods: ['GET', 'POST'])]
-    #[isGranted('ROLE_USER')]
-    public function new(Request $request, StoryRepository $storyRepository): Response
+    #[Route( '/nouvelle', name: 'app_story_new', methods: ['GET', 'POST'] )]
+    #[isGranted( 'ROLE_USER' )]
+    public function new( Request $request, StoryRepository $storyRepository ) : Response
     {
         $story = new Story();
-        $form = $this->createForm(StoryType::class, $story);
-        $form->handleRequest($request);
+        $form = $this->createForm( StoryType::class, $story );
+        $form->handleRequest( $request );
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ( $form->isSubmitted() && $form->isValid() ) {
 
-            if (empty($story->getDescription())) {
-                $this->addFlash('danger', 'On a tous une histoire à raconter, non ? la tienne est vide !');
-                return $this->redirectToRoute('app_story_new');
+            if ( empty( $story->getDescription() ) ) {
+                $this->addFlash( 'danger', 'On a tous une histoire à raconter, non ? la tienne est vide !' );
+                return $this->redirectToRoute( 'app_story_new' );
             }
 
-            $story->setPublishedAt(new \DateTimeImmutable());
-            $story->setAuthor($this->getUser());
+            $story->setPublishedAt( new \DateTimeImmutable() );
+            $story->setAuthor( $this->getUser() );
 
 
-            $storyRepository->save($story, true);
+            $storyRepository->save( $story, true );
 
-            return $this->redirectToRoute('app_story_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute( 'app_story_index', [], Response::HTTP_SEE_OTHER );
         }
 
-        return $this->render('story/new.html.twig', [
+        return $this->render( 'story/new.html.twig', [
             'story' => $story,
             'form' => $form,
-        ]);
+        ] );
     }
 
-    #[Route('/{id}', name: 'app_story_show', methods: ['GET'])]
-    #[isGranted('ROLE_USER')]
-    public function show(Story $story): Response
+    #[Route( '/{id}', name: 'app_story_show', methods: ['GET'] )]
+    public function show( Story $story ) : Response
     {
-        return $this->render('story/show.html.twig', [
+        $this->denyAccessUnlessGranted( 'show', $story );
+
+        return $this->render( 'story/show.html.twig', [
             'story' => $story,
-        ]);
+        ] );
     }
 
-    #[Route('/{id}/edit', name: 'app_story_edit', methods: ['GET', 'POST'])]
-    #[isGranted('ROLE_USER')]
-    public function edit(Request $request, Story $story, StoryRepository $storyRepository): Response
+    #[Route( '/{id}/edition', name: 'app_story_edit', methods: ['GET', 'POST'] )]
+    #[isGranted( 'ROLE_USER' )]
+    public function edit( Request $request, Story $story, StoryRepository $storyRepository ) : Response
     {
-        $form = $this->createForm(StoryType::class, $story);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $storyRepository->save($story, true);
+        $this->denyAccessUnlessGranted( 'edit', $story );
 
-            return $this->redirectToRoute('app_story_index', [], Response::HTTP_SEE_OTHER);
+        $form = $this->createForm( StoryType::class, $story );
+        $form->handleRequest( $request );
+
+        if ( $form->isSubmitted() && $form->isValid() ) {
+            $storyRepository->save( $story, true );
+
+            return $this->redirectToRoute( 'app_story_index', [], Response::HTTP_SEE_OTHER );
         }
 
-        return $this->render('story/edit.html.twig', [
+        return $this->render( 'story/edit.html.twig', [
             'story' => $story,
             'form' => $form,
-        ]);
+        ] );
     }
 
-    #[Route('/{id}', name: 'app_story_delete', methods: ['POST'])]
-    #[isGranted('ROLE_USER')]
-    public function delete(Request $request, Story $story, StoryRepository $storyRepository): Response
+    #[Route( '/{id}', name: 'app_story_delete', methods: ['POST'] )]
+    #[isGranted( 'ROLE_USER' )]
+    public function delete( Request $request, Story $story, StoryRepository $storyRepository ) : Response
     {
-        if ($this->isCsrfTokenValid('delete'.$story->getId(), $request->request->get('_token'))) {
-            $storyRepository->remove($story, true);
+        if ( $this->isCsrfTokenValid( 'delete' . $story->getId(), $request->request->get( '_token' ) ) ) {
+            $storyRepository->remove( $story, true );
         }
 
-        return $this->redirectToRoute('app_story_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute( 'app_story_index', [], Response::HTTP_SEE_OTHER );
     }
 }

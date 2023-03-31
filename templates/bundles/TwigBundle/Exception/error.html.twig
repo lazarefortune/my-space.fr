@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center align-items-center mt-5">
+                <div class="error-template text-center">
+                    <h1>
+                        Oops!
+                    </h1>
+                    <h2 class="display-1 mb-2">
+                        Une erreur s'est produite
+                    </h2>
+                    <div class="error-details mb-4">
+                        Veuillez nous excuser, une erreur s'est produite, le problème a été signalé et sera résolu
+                    </div>
+                    <div class="error-actions">
+                        <a href="{{ path('app_home') }}" class="btn btn-primary btn-lg"><span
+                                    class="glyphicon glyphicon-home"></span>
+                            {{ 'error.404.btn-label'|trans }}
+                        </a>
+                        <a href="{{ path('app_contact') }}" class="btn btn-default btn-lg"><span
+                                    class="glyphicon glyphicon-envelope"></span> {{ 'error.404.btn-support-label'|trans }} </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

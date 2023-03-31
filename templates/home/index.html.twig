@@ -9,16 +9,17 @@
         <div class="row">
             <div class="col-md-7 col-12">
                 <h1 class="text-uppercase display-4 text-white hero__title">
-                    Partagez <span>vos histoires</span>
+                    {{ 'hero.title.part1'|trans }} <span>{{ 'hero.title.part2'|trans }}</span>
                 </h1>
                 <p class="text-white hero__subtitle">
-                    Parce que nous avons tous des histoires à raconter, ce site vous permet de partager vos histoires avec les autres membres de la communauté.
+                    {{ 'hero.description'|trans }}
+{#                    Parce que nous avons tous des histoires à raconter, ce site vous permet de partager vos histoires avec les autres membres de la communauté.#}
                 </p>
                 <a href="{{ path('app_story_new') }}" class="btn btn-primary hero__btn">
-                    Raconter mon histoire
+                    {{ 'hero.btn-label'|trans }}
                 </a>
                 <a href="{{ path('app_story_index') }}" class="btn btn-outline-primary hero__outline__btn">
-                    Lire les histoires
+                    {{ 'hero.btn-outline-label'|trans }}
                 </a>
             </div>
         </div>

@@ -4,11 +4,32 @@ premium-btn-label: Become a premium member
 premium-description: You can become a premium member and enjoy all the advantages of the site
 
 # Header - Menu
-Home: Home
-Stories: Stories
-About: About
-Contact: Contact
-MyAccount: My account
-Dashboard: Dashboard
+navbar:
+  menu:
+    home: Accueil
+    stories: stories
+    about: About
+    contact: Contact
+    account: My account
+    dashboard: Dashboard
+    searchbar:
+      placeholder: A question?
+      btn-label: Search
 
-# About
+# Hero - Home
+
+hero:
+  title:
+    part1: Share
+    part2: your stories
+  description: Because we all have stories to tell, this site allows you to share your stories with other members of the community.
+  btn-label: Tell my story
+  btn-outline-label: Read stories
+
+# Error - 404
+error:
+    404:
+        title: Page not found
+        description: The page you are looking for does not exist or has been moved.
+        btn-label: Take me home
+        btn-support-label: Contact support

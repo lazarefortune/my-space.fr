@@ -22,6 +22,38 @@ premium-question: Vous n'êtes pas membre premium
 premium-btn-label: Devenir membre premium
 premium-description: Vous pouvez devenir membre premium et profiter de tous les avantages du site
 
+navbar:
+    menu:
+        home: Accueil
+        stories: Histoires
+        about: À proposé
+        contact: Contact
+        account: Mon compte
+        dashboard: Tableau de bord
+        searchbar:
+            placeholder: Une question ?
+            btn-label: Rechercher
+
+hero:
+    title:
+        part1: Partager
+        part2: vos histoires
+    description: Parce que nous avons tous des histoires à raconter, ce site vous permet de partager vos histoires avec les autres membres de la communauté.
+    btn-label: Raconter mon histoire
+    btn-outline-label: Lire les histoires
+
+error:
+    404:
+        title: Page introuvable
+        description: La page que vous recherchez n'existe pas ou a été déplacée.
+        btn-label: Retour à l'accueil
+        btn-support-label: Contacter le support
+    403:
+        title: Accès refusé
+        description: Vous n'avez pas les droits pour accéder à cette page.
+        btn-label: Retour à l'accueil
+        btn-support-label: Contacter le support
+
 layout:
     menu:
         admin: 'messages'

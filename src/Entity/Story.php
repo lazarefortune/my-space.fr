@@ -10,6 +10,19 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: StoryRepository::class)]
 class Story
 {
+    // Actions
+    public const ACTION_CREATE = 'create';
+    public const ACTION_SHOW = 'show';
+    public const ACTION_EDIT = 'edit';
+    public const ACTION_DELETE = 'delete';
+    public const ACTION_PUBLISH = 'publish';
+    public const ACTION_TRASH = 'trash';
+
+    // privacy values
+    public const PRIVACY_PUBLIC = 'public';
+    public const PRIVACY_PRIVATE = 'private';
+    public const PRIVACY_ONLY_FRIENDS = 'only_friends';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -90,7 +103,7 @@ class Story
         return $this;
     }
 
-    public function isIsDraft(): ?bool
+    public function getIsDraft(): ?bool
     {
         return $this->isDraft;
     }
@@ -102,7 +115,7 @@ class Story
         return $this;
     }
 
-    public function isIsTrash(): ?bool
+    public function getIsTrash(): ?bool
     {
         return $this->isTrash;
     }
