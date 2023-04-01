@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Story;
 use App\Form\StoryType;
 use App\Repository\StoryRepository;
+use App\Service\StoryService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,11 +15,13 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[Route( '/histoires' )]
 class StoryController extends AbstractController
 {
+    public function __construct( private readonly StoryService $storyService ){}
+
     #[Route( '', name: 'app_story_index', methods: ['GET'] )]
-    public function index( StoryRepository $storyRepository ) : Response
+    public function index() : Response
     {
         return $this->render( 'story/index.html.twig', [
-            'stories' => $storyRepository->findAll(),
+            'stories' => $this->storyService->getAvailableStories(),
         ] );
     }
 
@@ -37,7 +40,10 @@ class StoryController extends AbstractController
                 return $this->redirectToRoute( 'app_story_new' );
             }
 
-            $story->setPublishedAt( new \DateTimeImmutable() );
+            if ( $story->getPrivacy() === Story::PRIVACY_PUBLIC ) {
+                $story->setPublishedAt( new \DateTimeImmutable() );
+            }
+
             $story->setAuthor( $this->getUser() );
 
 

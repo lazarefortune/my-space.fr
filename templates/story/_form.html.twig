@@ -1,6 +1,8 @@
 {{ form_start(form) }}
 
-    {% include 'layouts/_flash_message.html.twig' %}
+    <div class="mb-2">
+        {% include 'layouts/_flash_message.html.twig' %}
+    </div>
 
     <div class="form-group mb-4">
         {{ form_label(form.title) }}
@@ -10,7 +12,7 @@
 
     <div class="form-group mb-4">
         {{ form_label(form.description) }}
-        {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+        {{ form_widget(form.description, {'attr': {'class': 'form-control myCkeditor'}}) }}
         {{ form_errors(form.description) }}
     </div>
 
@@ -30,3 +32,31 @@
 
     <button class="btn btn-primary" id="story_submit">{{ button_label|default('Partager mon histoire') }}</button>
 {{ form_end(form) }}
+
+
+{% block javascripts %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sélectionnez le formulaire et le champ CKEditor
+            const form = document.getElementsByClassName('myCkeditor')[0].closest('form');
+            const ckeditor = CKEDITOR.instances['story_description'];
+            console.log(form);
+            // Ajoutez un gestionnaire d'événement 'submit' au formulaire
+            form.addEventListener('submit', function(event) {
+                // Vérifiez si le champ CKEditor est vide
+                const ckeditorContent = ckeditor.getData().trim();
+                if (ckeditorContent === '') {
+                    // Annulez la soumission du formulaire
+                    event.preventDefault();
+
+                    // Affichez un message d'erreur
+                    alert('Le contenu ne peut pas être vide.');
+                }
+            });
+        });
+    </script>
+{% endblock %}
+
+
+
+

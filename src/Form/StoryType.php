@@ -27,6 +27,7 @@ class StoryType extends AbstractType
                 'attr' => [
                     'class' => 'form-control'
                 ],
+                'required' => true,
                 'config' => [
 //                    'uiColor' => '#ffff3f',
                     'required' => true,
