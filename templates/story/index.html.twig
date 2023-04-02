@@ -3,53 +3,43 @@
 {% block title %}Story index{% endblock %}
 
 {% block body %}
-    <h1>Story index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Auteur</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Privacy</th>
-                <th>IsDraft</th>
-                <th>IsTrash</th>
-                <th>PublishedAt</th>
-                <th>UpdatedAt</th>
-                <th>CreatedAt</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for story in stories %}
-            <tr>
-                <td>{{ story.id }}</td>
-                <td>{{ story.author.fullname }}</td>
-                <td>{{ story.title }}</td>
-                <td>{{ story.description | raw }}</td>
-                <td>{{ story.privacy }}</td>
-                <td>{{ story.isDraft ? 'Yes' : 'No' }}</td>
-                <td>{{ story.isTrash ? 'Yes' : 'No' }}</td>
-                <td>{{ story.publishedAt ? story.publishedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ story.updatedAt ? story.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ story.createdAt ? story.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    {% if is_granted('show', story) %}
-                    <a href="{{ path('app_story_show', {'id': story.id}) }}">show</a>
-                    {% endif %}
-                    {% if is_granted('edit', story) %}
-                        <a href="{{ path('app_story_edit', {'id': story.id}) }}">edit</a>
-                    {% endif %}
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="10">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-12">
+                <h1>Toutes les histoires</h1>
+            </div>
+            <div class="col-12">
+                <p>Vous trouverez ici toutes les histoires de notre site.</p>
+            </div>
+            <div class="col-12">
+                <a href="{{ path('app_story_new') }}" class="btn btn-primary">Créer une nouvelle histoire</a>
+            </div>
+        </div>
 
-    <a href="{{ path('app_story_new') }}">Create new</a>
+        <div class="row mt-3">
+            {% for story in stories %}
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ story.title }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ story.author.fullname }}</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ story.publishedAt ? story.publishedAt|date('d/m/Y à H:i') : '' }}</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ story.updatedAt ? story.updatedAt|date('d/m/Y à H:i') : '' }}</h6>
+                            <p class="card-text">{{ story.description | raw }}</p>
+                            <a href="{{ path('app_story_show', {'id': story.id}) }}" class="card-link">Show</a>
+                            <a href="{{ path('app_story_edit', {'id': story.id}) }}" class="card-link">Edit</a>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-text">No stories found</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
 {% endblock %}
