@@ -1,0 +1,97 @@
+image: php:8.1-cli
+
+cache:
+  paths:
+    - vendor/
+
+before_script:
+  - apt-get update -yqq
+  - apt-get install git unzip -yqq
+  - curl -sS https://getcomposer.org/installer | php
+  - php composer.phar install --prefer-dist --no-ansi --no-interaction --no-scripts
+  - apt-get install -yqq libpq-dev
+  - docker-php-ext-install pdo pdo_pgsql
+  # install mysql
+  - apt-get install -yqq default-mysql-client
+
+stages:
+  - code_sniffer
+  - static_analysis
+  - test
+  - deploy_dev
+  - deploy
+
+phpcs:
+  stage: code_sniffer
+  script:
+    - ./vendor/bin/phpcs --standard=PSR12 src/
+
+phpstan:
+  stage: static_analysis
+  script:
+    - ./vendor/bin/phpstan analyse src/
+
+phpunit:
+  stage: test
+  script:
+    - apt-get install -yqq zlib1g-dev libzip-dev
+    - docker-php-ext-install zip
+    - pecl install pcov
+    - docker-php-ext-enable pcov
+    #    - ./vendor/bin/phpunit
+    #    - ./vendor/bin/phpunit --coverage-text --colors=never
+    # create database for tests and run migrations
+    #    - psql -c 'create database medibook_test;' -U postgres
+    - php bin/console lexik:jwt:generate-keypair
+    - php bin/console doctrine:database:create --env=test
+    - php bin/console doctrine:schema:create --env=test
+    - php bin/console hautelook:fixtures:load --env=test --no-interaction
+    - ./vendor/bin/phpunit --coverage-text --colors=never
+  services:
+    - postgres:latest
+  variables:
+    POSTGRES_HOST_AUTH_METHOD: trust
+    POSTGRES_DB: test
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: postgres
+
+deploy_dev:
+  stage: deploy_dev
+  script:
+    - apt-get update -yqq
+    - apt-get install -yqq openssh-client
+    - mkdir -p ~/.ssh
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - eval "$(ssh-agent -s)"
+    - ssh-add ~/.ssh/id_rsa
+    - ssh-keyscan -p $SSH_PORT -H $SSH_HOST >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+    - ssh -p $SSH_PORT -i ~/.ssh/id_rsa $SSH_USER@$SSH_HOST pwd
+    - ssh -p $SSH_PORT -i ~/.ssh/id_rsa $SSH_USER@$SSH_HOST "cd /home/$SSH_USER/public_html/dev-medibook && git pull origin dev"
+    - ssh -p $SSH_PORT -i ~/.ssh/id_rsa $SSH_USER@$SSH_HOST "cd /home/$SSH_USER/public_html/dev-medibook && composer2 u --prefer-dist --no-ansi --no-interaction --no-scripts"
+    - ssh -p $SSH_PORT -i ~/.ssh/id_rsa $SSH_USER@$SSH_HOST "cd /home/$SSH_USER/public_html/dev-medibook && php bin/console doctrine:migrations:migrate --no-interaction"
+    - ssh -p $SSH_PORT -i ~/.ssh/id_rsa $SSH_USER@$SSH_HOST "cd /home/$SSH_USER/public_html/dev-medibook && php bin/console cache:clear"
+  only:
+    - dev
+
+deploy:
+  stage: deploy
+  script:
+    - apt-get update -yqq
+    - apt-get install -yqq openssh-client
+    - mkdir -p ~/.ssh
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - eval "$(ssh-agent -s)"
+    - ssh-add ~/.ssh/id_rsa
+    - ssh-keyscan -p $SSH_PORT -H $SSH_HOST >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+    - ssh -p $SSH_PORT -i ~/.ssh/id_rsa $SSH_USER@$SSH_HOST pwd
+    - ssh -p $SSH_PORT -i ~/.ssh/id_rsa $SSH_USER@$SSH_HOST "cd /home/$SSH_USER/public_html/medibook && git pull origin main"
+    - ssh -p $SSH_PORT -i ~/.ssh/id_rsa $SSH_USER@$SSH_HOST "cd /home/$SSH_USER/public_html/medibook && composer2 u --prefer-dist --no-ansi --no-interaction --no-scripts"
+    - ssh -p $SSH_PORT -i ~/.ssh/id_rsa $SSH_USER@$SSH_HOST "cd /home/$SSH_USER/public_html/medibook && php bin/console doctrine:migrations:migrate --no-interaction"
+    - ssh -p $SSH_PORT -i ~/.ssh/id_rsa $SSH_USER@$SSH_HOST "cd /home/$SSH_USER/public_html/medibook && php bin/console cache:clear"
+  only:
+    - main
+

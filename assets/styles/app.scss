@@ -1,172 +1,176 @@
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-/* ====== Variables ====== */
-
-$first-color: #5fe67c;
-$secondary-color: #2f42ea;
-$tertiary-color: #f5f5f5;
-$dark-color: #000;
-$light-color: #fff;
-$gray-color: #ccc;
-$dark-gray-color: #333;
-$light-gray-color: #f5f5f5;
-$danger-color: #ff0000;
-$warning-color: #ffcc00;
-$success-color: #5fe67c;
-$info-color: #2f42ea;
-
-$topNavBarHeight: 4rem;
-
-body {
-    //background-color: lightgray;
-    font-size: 1.2rem;
-}
-
-$heading-strong-color: #2f42ea;
-
-/* ====== Global style ====== */
-
-h1 strong,
-h2 strong,
-h3 strong,
-h4 strong,
-h5 strong {
-    color: $heading-strong-color;
-}
-
-a {
-    text-decoration: none;
-    color: inherit;
-}
-
-/* ====== Main ====== */
-
-main{
-    margin-top: 4rem;
-    min-height: 100vh;
-}
-
-/*===== Ckeditor style =====*/
-
-.cke{
-    border: 2px solid black !important;
-    border-radius: 4px !important;
-}
-
-/*===== Navbar style =====*/
-
-.navbar {
-    background-color: $first-color;
-    padding: 0.5rem 1rem;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 10;
-}
-
-.navbar-nav {
-    .nav-item{
-        .nav-link {
-            color: $dark-color;
-            font-size: 1.2rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            padding: 0.5rem 1rem;
-            transition: all 0.3s ease-in-out;
-
-            &:hover {
-                background-color: $first-color;
-            }
-
-            &.active {
-                background-color: $first-color;
-            }
-        }
-    }
-}
-
-/*===== hero style =====*/
-
-.hero {
-    background-image: url(../../assets/images/library-bg.jpg);
-    background-position: center;
-    background-size: cover;
-    background-attachment: fixed;
-    position: relative;
-    z-index: 2;
-}
-
-.hero::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: -1;
-}
-
-.hero__title {
-    font-size: 3rem;
-    font-weight: 700;
-    color: #fff;
-    margin-bottom: 1rem;
-
-    & span {
-        color: #5fe67c;
-    }
-}
-
-.hero__subtitle {
-    font-size: 1.5rem;
-    font-weight: 400;
-    color: #fff;
-    margin-bottom: 1rem;
-}
-
-.hero__btn {
-    display: inline-block;
-    padding: 0.9rem 1.5rem;
-    margin-right: 1rem;
-    margin-bottom: 1rem;
-    background-color: #5fe67c;
-    color: #000000;
-    border: 1px solid #5fe67c;
-    border-radius: 4px;
-    font-size: 1.2rem;
-    font-weight: 700;
-    letter-spacing: 1px;
-    transition: all 0.3s ease-in-out;
-
-    &:hover {
-        background-color: #000000;
-        color: #5fe67c;
-    }
-}
-
-.hero__outline__btn {
-    display: inline-block;
-    padding: 0.9rem 1.5rem;
-    margin-bottom: 1rem;
-    background-color: transparent;
-    color: #5fe67c;
-    border: 1px solid #5fe67c;
-    border-radius: 4px;
-    font-size: 1.2rem;
-    font-weight: 700;
-    letter-spacing: 1px;
-    transition: all 0.3s ease-in-out;
-
-    &:hover {
-        background-color: #5fe67c;
-        color: #000000;
-    }
-}
+//*,
+//*::before,
+//*::after {
+//    box-sizing: border-box;
+//    padding: 0;
+//    margin: 0;
+//}
+//
+///* ====== Variables ====== */
+//
+//$first-color: #5fe67c;
+//$secondary-color: #2f42ea;
+//$tertiary-color: #f5f5f5;
+//$dark-color: #000;
+//$light-color: #fff;
+//$gray-color: #ccc;
+//$dark-gray-color: #333;
+//$light-gray-color: #f5f5f5;
+//$danger-color: #ff0000;
+//$warning-color: #ffcc00;
+//$success-color: #5fe67c;
+//$info-color: #2f42ea;
+//
+//$topNavBarHeight: 4rem;
+//
+//body {
+//    //background-color: lightgray;
+//    font-size: 1.2rem;
+//}
+//
+//$heading-strong-color: #2f42ea;
+//
+///* ====== Global style ====== */
+//
+//h1 strong,
+//h2 strong,
+//h3 strong,
+//h4 strong,
+//h5 strong {
+//    color: $heading-strong-color;
+//}
+//
+//a {
+//    text-decoration: none;
+//    color: inherit;
+//}
+//
+///* ====== Main ====== */
+//
+//main{
+//    margin-top: 4rem;
+//    min-height: 100vh;
+//}
+//
+///*===== Ckeditor style =====*/
+//
+//.cke{
+//    border: 2px solid black !important;
+//    border-radius: 4px !important;
+//}
+//
+///*===== Navbar style =====*/
+//
+//.navbar {
+//    background-color: $first-color;
+//    padding: 0.5rem 1rem;
+//    position: fixed;
+//    top: 0;
+//    left: 0;
+//    width: 100%;
+//    z-index: 10;
+//}
+//
+//.navbar-nav {
+//    .nav-item{
+//        .nav-link {
+//            color: $dark-color;
+//            font-size: 1.2rem;
+//            font-weight: 700;
+//            letter-spacing: 1px;
+//            padding: 0.5rem 1rem;
+//            transition: all 0.3s ease-in-out;
+//
+//            &:hover {
+//                background-color: $first-color;
+//            }
+//
+//            &.active {
+//                background-color: $first-color;
+//            }
+//        }
+//    }
+//}
+//
+///*===== hero style =====*/
+//
+//.hero {
+//    background-image: url(../../assets/images/library-bg.jpg);
+//    background-position: center;
+//    background-size: cover;
+//    background-attachment: fixed;
+//    position: relative;
+//    z-index: 2;
+//}
+//
+//.hero::after {
+//    content: "";
+//    position: absolute;
+//    top: 0;
+//    left: 0;
+//    width: 100%;
+//    height: 100%;
+//    background-color: rgba(0, 0, 0, 0.5);
+//    z-index: -1;
+//}
+//
+//.hero__title {
+//    font-size: 3rem;
+//    font-weight: 700;
+//    color: #fff;
+//    margin-bottom: 1rem;
+//
+//    & span {
+//        color: #5fe67c;
+//    }
+//}
+//
+//.hero__subtitle {
+//    font-size: 1.5rem;
+//    font-weight: 400;
+//    color: #fff;
+//    margin-bottom: 1rem;
+//}
+//
+//.hero__btn {
+//    display: inline-block;
+//    padding: 0.9rem 1.5rem;
+//    margin-right: 1rem;
+//    margin-bottom: 1rem;
+//    background-color: #5fe67c;
+//    color: #000000;
+//    border: 1px solid #5fe67c;
+//    border-radius: 4px;
+//    font-size: 1.2rem;
+//    font-weight: 700;
+//    letter-spacing: 1px;
+//    transition: all 0.3s ease-in-out;
+//
+//    &:hover {
+//        background-color: #000000;
+//        color: #5fe67c;
+//    }
+//}
+//
+//.hero__outline__btn {
+//    display: inline-block;
+//    padding: 0.9rem 1.5rem;
+//    margin-bottom: 1rem;
+//    background-color: transparent;
+//    color: #5fe67c;
+//    border: 1px solid #5fe67c;
+//    border-radius: 4px;
+//    font-size: 1.2rem;
+//    font-weight: 700;
+//    letter-spacing: 1px;
+//    transition: all 0.3s ease-in-out;
+//
+//    &:hover {
+//        background-color: #5fe67c;
+//        color: #000000;
+//    }
+//}

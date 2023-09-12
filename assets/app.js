@@ -6,9 +6,6 @@
  */
 
 // any CSS you import will output into a single css file (app.css in this case)
-import './styles/bootstrap.min.css';
-import './scss/_variables.scss';
-import './scss/custom.scss';
 import './styles/app.scss';
 import 'bootstrap';
 

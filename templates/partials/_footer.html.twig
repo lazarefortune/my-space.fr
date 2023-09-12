@@ -1,18 +1,23 @@
-<footer class="footer bg-dark text-white py-5 mt-5 text-center text-sm-left">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4">
-                <h3>Footer</h3>
-                <p>Footer</p>
-            </div>
-            <div class="col-md-4">
-                <h3>Footer</h3>
-                <p>Footer</p>
-            </div>
-            <div class="col-md-4">
-                <h3>Footer</h3>
-                <p>Footer</p>
-            </div>
+<footer class="container">
+    <div class="flex flex-col items-center justify-between gap-4 border-t border-t-slate-200 py-10 dark:border-t-slate-700 md:h-24 md:flex-row md:py-0">
+        <div class="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0">
+            <p class="text-center text-sm leading-loose text-slate-600 dark:text-slate-400 md:text-left">Fait par
+                <a href="https://lazarefortune.com" target="_blank" rel="noreferrer" class="font-semibold underline underline-offset-4">Lazare Fortune</a>
+            </p>
+        </div>
+        <div>
+            <a target="_blank" rel="noreferrer" href="https://github.com/lazarefortune">
+                <div class="active:scale-95 inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:hover:bg-slate-800 dark:hover:text-slate-100 disabled:opacity-50 dark:focus:ring-slate-400 disabled:pointer-events-none dark:focus:ring-offset-slate-900 data-[state=open]:bg-slate-100 dark:data-[state=open]:bg-slate-800 bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800 dark:text-slate-100 dark:hover:text-slate-100 data-[state=open]:bg-transparent dark:data-[state=open]:bg-transparent h-9 px-2 rounded-md text-slate-700 dark:text-slate-400">
+                    {{ icon('github') }}
+                    <span class="sr-only">Github</span>
+                </div>
+            </a>
+            <a target="_blank" rel="noreferrer" href="https://twitter.com/LazareFortune">
+                <div class="active:scale-95 inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:hover:bg-slate-800 dark:hover:text-slate-100 disabled:opacity-50 dark:focus:ring-slate-400 disabled:pointer-events-none dark:focus:ring-offset-slate-900 data-[state=open]:bg-slate-100 dark:data-[state=open]:bg-slate-800 bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800 dark:text-slate-100 dark:hover:text-slate-100 data-[state=open]:bg-transparent dark:data-[state=open]:bg-transparent h-9 px-2 rounded-md text-slate-700 dark:text-slate-400">
+                    {{ icon('twitter') }}
+                    <span class="sr-only">Twitter</span>
+                </div>
+            </a>
         </div>
     </div>
 </footer>

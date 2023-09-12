@@ -1,0 +1,55 @@
+body {
+  font-family: 'Inter' ,'GG Sans', 'Inter', 'CircularStd', 'Poppins', 'Lato', 'Pacifico', 'Josefin Sans', sans-serif;
+  background-color: #ffffff;
+  font-size: 18px;
+  line-height: 1.6;
+  scroll-margin: 100px 0 0 0;
+  word-break: break-word;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply font-ggSans;
+}
+
+button {
+  @apply font-inter;
+}
+
+.container {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 2rem;
+  padding-left: 2rem;
+}
+
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1400px;
+  }
+}
+
+.btn-primary {
+  @apply font-inter active:scale-95 inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:hover:bg-slate-800 dark:hover:text-slate-100 disabled:opacity-50 dark:focus:ring-slate-400 disabled:pointer-events-none dark:focus:ring-offset-slate-900 data-[state=open]:bg-slate-100 dark:data-[state=open]:bg-slate-800 bg-pink-700 text-white hover:bg-pink-500 dark:bg-slate-50 dark:text-slate-900 h-11 px-8;
+}
+
+.btn-primary-dark{
+  @apply active:scale-95 inline-flex items-center justify-center text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:hover:bg-slate-800 dark:hover:text-slate-100 disabled:opacity-50 dark:focus:ring-slate-400 disabled:pointer-events-none dark:focus:ring-offset-slate-900 data-[state=open]:bg-slate-100 dark:data-[state=open]:bg-slate-800 bg-slate-900 text-white hover:bg-slate-700 dark:bg-slate-50 dark:text-slate-900 h-11 px-8 rounded-md;
+}
+
+.btn-secondary-alt {
+  @apply active:scale-95 inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:hover:bg-slate-800 dark:hover:text-slate-100 disabled:opacity-50 dark:focus:ring-slate-400 disabled:pointer-events-none dark:focus:ring-offset-slate-900 data-[state=open]:bg-slate-100 dark:data-[state=open]:bg-slate-800 bg-slate-100 text-slate-900 hover:bg-slate-200 dark:bg-slate-700 dark:text-slate-100 h-11 px-8;
+}
+
+.btn-secondary {
+  @apply font-inter active:scale-95 inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:hover:bg-slate-800 dark:hover:text-slate-100 disabled:opacity-50 dark:focus:ring-slate-400 disabled:pointer-events-none dark:focus:ring-offset-slate-900 data-[state=open]:bg-slate-100 dark:data-[state=open]:bg-slate-800 bg-transparent border border-slate-200 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-100 h-11 px-8;
+}
+
+//
+////body {
+////  @apply font-family['CircularStd', 'Inter', 'Poppins', 'Lato', 'Pacifico', 'Josefin Sans', sans-serif] bg-white text-base text-gray-800 leading-6 scroll-margin-top[100px] word-break[break-word];
+////}
+//
+//a {
+//  @apply text-indigo-600 no-underline hover:text-indigo-500 hover:no-underline;
+//}

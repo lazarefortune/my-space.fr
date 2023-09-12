@@ -3,9 +3,10 @@
 namespace App\Controller;
 
 use App\Form\UserProfileType;
-use App\Repository\StoryRepository;
+use App\Service\StoryService;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Cache\InvalidArgumentException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,33 +16,24 @@ use Symfony\Contracts\Cache\ItemInterface;
 
 class HomeController extends AbstractController
 {
+
+    public function __construct( private readonly StoryService $storyService, private CacheInterface $cache )
+    {
+    }
+
+    /**
+     * @throws InvalidArgumentException
+     */
     #[Route('/', name: 'app_home')]
-    public function index( StoryRepository $storyRepository, CacheInterface $cache ): Response
+    public function homepage(): Response
     {
 
-        $stories = $storyRepository->findBy(
-            [
-                'privacy' => 'public',
-                'isDraft' => false,
-                'isTrash' => false,
-            ],
-            [
-                'publishedAt' => 'DESC'
-            ]
-        );
+        // mise en cache de la liste des histoires pour 1h
+        $stories = $this->cache->get('stories', function (ItemInterface $item) {
+            $item->expiresAfter(3600);
 
-        // use cache to get stories
-//        $stories = $cache->get('stories', function (ItemInterface $item) use ($storyRepository) {
-//            $item->expiresAfter(3600);
-//            return $storyRepository->findBy(
-//                [
-//                    'privacy' => 'public',
-//                ],
-//                [
-//                    'publishedAt' => 'DESC'
-//                ]
-//            );
-//        });
+            return $this->storyService->getAvailableStories(4);
+        });
 
         return $this->render('home/index.html.twig', [
             'stories' => $stories,

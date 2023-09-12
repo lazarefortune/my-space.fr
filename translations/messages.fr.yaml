@@ -36,11 +36,11 @@ navbar:
 
 hero:
     title:
-        part1: Partager
-        part2: vos histoires
+        part1: Partagez
+        part2: vos histoires.
     description: Parce que nous avons tous des histoires à raconter, ce site vous permet de partager vos histoires avec les autres membres de la communauté.
     btn-label: Raconter mon histoire
-    btn-outline-label: Lire les histoires
+    btn-outline-label: Lire des histoires
 
 error:
     404:

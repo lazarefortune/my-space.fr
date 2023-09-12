@@ -4,30 +4,40 @@ namespace App\Controller;
 
 use App\Entity\Story;
 use App\Form\StoryType;
-use App\Repository\StoryRepository;
 use App\Service\StoryService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 
-#[Route( '/histoires' )]
+#[Route( '/histoires' , name: 'app_story_')]
 class StoryController extends AbstractController
 {
-    public function __construct( private readonly StoryService $storyService ){}
+    public function __construct( private readonly StoryService $storyService,private CacheInterface $cache )
+    {
+    }
 
-    #[Route( '', name: 'app_story_index', methods: ['GET'] )]
+    #[Route( '/', name: 'index', methods: ['GET'] )]
     public function index() : Response
     {
+        // cache
+        $stories = $this->cache->get( 'stories', function ( ItemInterface $item ) {
+            $item->expiresAfter( 3600 );
+
+            return $this->storyService->getAvailableStories();
+        } );
+
         return $this->render( 'story/index.html.twig', [
-            'stories' => $this->storyService->getAvailableStories(),
+            'stories' => $stories,
         ] );
     }
 
-    #[Route( '/nouvelle', name: 'app_story_new', methods: ['GET', 'POST'] )]
+    #[Route( '/creation', name: 'new', methods: ['GET', 'POST'] )]
     #[isGranted( 'ROLE_USER' )]
-    public function new( Request $request, StoryRepository $storyRepository ) : Response
+    public function new( Request $request ) : Response
     {
         $story = new Story();
         $form = $this->createForm( StoryType::class, $story );
@@ -35,21 +45,17 @@ class StoryController extends AbstractController
 
         if ( $form->isSubmitted() && $form->isValid() ) {
 
-            if ( empty( $story->getDescription() ) ) {
-                $this->addFlash( 'danger', 'On a tous une histoire à raconter, non ? la tienne est vide !' );
+            try {
+                $this->storyService->createStory( $story, $this->getUser() );
+
+                $this->addFlash( 'success', 'Votre histoire a bien été créée' );
+                return $this->redirectToRoute( 'app_story_index', [], Response::HTTP_SEE_OTHER );
+            } catch ( \InvalidArgumentException $e ) {
+                $this->addFlash( 'danger', $e->getMessage() );
+
                 return $this->redirectToRoute( 'app_story_new' );
             }
 
-            if ( $story->getPrivacy() === Story::PRIVACY_PUBLIC ) {
-                $story->setPublishedAt( new \DateTimeImmutable() );
-            }
-
-            $story->setAuthor( $this->getUser() );
-
-
-            $storyRepository->save( $story, true );
-
-            return $this->redirectToRoute( 'app_story_index', [], Response::HTTP_SEE_OTHER );
         }
 
         return $this->render( 'story/new.html.twig', [
@@ -58,7 +64,7 @@ class StoryController extends AbstractController
         ] );
     }
 
-    #[Route( '/{id}', name: 'app_story_show', methods: ['GET'] )]
+    #[Route( '/{id}', name: 'show', methods: ['GET'] )]
     public function show( Story $story ) : Response
     {
         $this->denyAccessUnlessGranted( 'show', $story );
@@ -68,9 +74,9 @@ class StoryController extends AbstractController
         ] );
     }
 
-    #[Route( '/{id}/edition', name: 'app_story_edit', methods: ['GET', 'POST'] )]
+    #[Route( '/{id}/edition', name: 'edit', methods: ['GET', 'POST'] )]
     #[isGranted( 'ROLE_USER' )]
-    public function edit( Request $request, Story $story, StoryRepository $storyRepository ) : Response
+    public function edit( Request $request, Story $story ) : Response
     {
 
         $this->denyAccessUnlessGranted( 'edit', $story );
@@ -79,7 +85,7 @@ class StoryController extends AbstractController
         $form->handleRequest( $request );
 
         if ( $form->isSubmitted() && $form->isValid() ) {
-            $storyRepository->save( $story, true );
+            $this->storyService->update( $story );
 
             return $this->redirectToRoute( 'app_story_index', [], Response::HTTP_SEE_OTHER );
         }
@@ -90,12 +96,22 @@ class StoryController extends AbstractController
         ] );
     }
 
-    #[Route( '/{id}', name: 'app_story_delete', methods: ['POST'] )]
+    #[Route( '/{id}/corbeille', name: 'move_to_trash', methods: ['POST'] )]
+    public function moveToTrash( Story $story ) : Response
+    {
+        $this->denyAccessUnlessGranted( 'moveToTrash', $story );
+
+        $this->storyService->moveToTrash( $story );
+
+        return $this->redirectToRoute( 'app_story_index', [], Response::HTTP_SEE_OTHER );
+    }
+
+    #[Route( '/{id}', name: 'delete', methods: ['POST'] )]
     #[isGranted( 'ROLE_USER' )]
-    public function delete( Request $request, Story $story, StoryRepository $storyRepository ) : Response
+    public function delete( Request $request, Story $story ) : Response
     {
         if ( $this->isCsrfTokenValid( 'delete' . $story->getId(), $request->request->get( '_token' ) ) ) {
-            $storyRepository->remove( $story, true );
+            $this->storyService->delete( $story );
         }
 
         return $this->redirectToRoute( 'app_story_index', [], Response::HTTP_SEE_OTHER );
