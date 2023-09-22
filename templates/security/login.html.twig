@@ -4,58 +4,48 @@
 
 {% block body %}
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-7 mx-auto mt-4">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="my-0 text-center">Connexion</h3>
-                    </div>
-                    <div class="card-body">
-                        <form method="post">
-                            {% if error %}
-                                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                            {% endif %}
-                            <div class="form-group mb-2">
-                                <label for="inputEmail">Email</label>
-                                <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
-                            </div>
+    <form class="flex flex-col max-w-xl w-full mx-auto" method="post">
+        <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center">
+            Connexion
+        </h1>
+        <p class="text-base text-gray-700 dark:text-gray-400 md:text-lg text-center mt-3 mb-4">
+            Pour accéder à votre compte, veuillez vous connecter.
+        </p>
+        {% if error %}
+            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+        <div class="mb-4">
+            <label for="inputEmail" class="label">Email</label>
+            <input type="email" class="form-input-md" required id="inputEmail" name="email" value="{{ last_username }}">
+        </div>
 
-                            <div class="form-group mb-2">
-                                <label for="inputPassword">Mot de passe</label>
-                                <input type="password" name="password" id="inputPassword" class="form-control" required>
-                            </div>
-
-                            <input type="hidden" name="_csrf_token"
-                                   value="{{ csrf_token('authenticate') }}"
-                            >
-
-                            <div class="checkbox mb-3">
-                                <label>
-                                    <input type="checkbox" name="_remember_me"> Se souvenir de moi
-                                </label>
-                            </div>
-
-                            <div class="form-group mb-2">
-                                <button class="btn btn-lg btn-primary btn-block" type="submit">
-                                    Se connecter
-                                </button>
-                            </div>
-
-                            <div class="form-group mb-2">
-                                <a href="">Mot de passe oublié ?</a>
-                            </div>
-
-                            <p>
-                                <a href="{{ path('app_register') }}">Pas encore inscrit ?</a>
-                            </p>
-
-
-                        </form>
-                    </div>
-                </div>
+        <div class="mb-5">
+            <label for="inputPassword" class="label">Mot de passe</label>
+            <input type="password" class="form-input-md" required id="inputPassword" name="password">
+        </div>
+        <input type="hidden" name="_csrf_token"
+               value="{{ csrf_token('authenticate') }}"
+        >
+        <div class="flex items-start mb-5">
+            <div class="flex items-center h-5">
+                <input id="remember" name="_remember_me" aria-describedby="remember" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800">
+            </div>
+            <div class="ml-3 text-sm">
+                <label for="remember" class="text-gray-500 dark:text-gray-300">
+                    Se souvenir de moi
+                </label>
             </div>
         </div>
-    </div>
+        <button class="btn-md btn-primary">
+            Se connecter
+        </button>
+
+        <p class="text-base text-gray-700 dark:text-gray-400 md:text-lg text-center mt-3 mb-4">
+            Pas encore de compte ? <a href="{{ path('app_register') }}" class="text-primary-600 hover:text-primary-700">Inscrivez-vous</a>
+        </p>
+    </form>
+
+
+
 
 {% endblock %}

@@ -1,48 +1,72 @@
 <header class="sticky top-0 z-40 w-full border-b border-b-slate-200 bg-white/80 backdrop-blur dark:border-b-slate-700 dark:bg-slate-900">
-    <div class="container mx-auto flex h-16 w-full items-center space-x-4 sm:space-x-0 sm:justify-between">
+    <div class="container mx-auto flex h-16 w-full items-center justify-between space-x-4 sm:space-x-0">
         <div>
             <div class="flex gap-6 lg:gap-10">
-                <a href="{{ path('app_home') }}" class="hidden items-center space-x-2 lg:flex">My
-                    <span class="hidden font-bold sm:inline-block">Space</span>
+                <a href="{{ path('app_home') }}" class="flex items-center text-slate-500 space-x-2">My
+                    <span class="font-bold text-primary-600 sm:inline-block">Space</span>
                 </a>
                 <nav class="hidden gap-2 lg:flex">
                     <a href="{{ path('app_story_index') }}"
-                       class="group relative inline-flex h-9 w-max items-center justify-center rounded-sm bg-transparent px-4 py-2 text-sm font-semibold transition-colors hover:bg-slate-100 focus:bg-slate-100 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-slate-50 data-[state=open]:bg-slate-50 dark:text-slate-100 dark:hover:bg-slate-800 dark:hover:text-slate-100 dark:focus:bg-slate-800 dark:data-[active]:bg-slate-800 dark:data-[state=open]:bg-slate-800">
+                       class="group relative inline-flex h-9 w-max items-center justify-center rounded-sm bg-transparent px-4 py-2 text-base font-semibold transition-colors hover:bg-slate-100 focus:bg-slate-100 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-slate-50 data-[state=open]:bg-slate-50 dark:text-slate-100 dark:hover:bg-slate-800 dark:hover:text-slate-100 dark:focus:bg-slate-800 dark:data-[active]:bg-slate-800 dark:data-[state=open]:bg-slate-800">
                         Histoires
                     </a>
                 </nav>
             </div>
         </div>
         <div class="flex items-center justify-end 1 space-x-4">
-            <!-- user dropdown icon -->
-            <div id="user-dropdown-icon"
-                 class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700">
-                {{ icon('user') }}
-            </div>
+            {% if app.user %}
+            <div class="relative mr-2 flex items-center">
+                <div id="userBtn"
+                     class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700">
+                    {{ icon('user') }}
+                </div>
 
-            <!-- user dropdown -->
-            <div id="user-dropdown"
-                 class="absolute top-0 right-0 mt-16 hidden w-48 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 dark:bg-slate-900">
-                <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="user-dropdown-icon">
-                    {% if app.user %}
-                        <a href="{{ path('app_profile') }}"
-                           class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-slate-100 dark:hover:bg-slate-800"
-                           role="menuitem">Mon profil</a>
+                <div id="userDropdown"
+                     class="absolute top-11 right-0 z-10 mt-2 w-48 origin-top-right scale-0 transform overflow-hidden rounded-lg bg-white shadow-xl transition-all duration-100">
+                    <div class="px-4 py-2">
+                        <p class="text-base font-medium text-gray-800 dark:text-gray-200">
+                            fullname
+                        </p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">
+                            email
+                        </p>
+                    </div>
+
+                    <hr class="border-gray-100">
+
+                    <div class="px-2 py-2">
+                        <a href=""
+                           class="user-dropdown-menu-item {{ menu_active('app_admin_account') }}">
+                            {{ icon('user') }}
+                            <span>Mon compte</span>
+                        </a>
+                    </div>
+
+                    <hr class="border-gray-100">
+
+                    <div class="px-2 py-2">
                         <a href="{{ path('app_logout') }}"
-                           class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-slate-100 dark:hover:bg-slate-800"
-                           role="menuitem">Déconnexion</a>
-                    {% else %}
-                        <a href="{{ path('app_login') }}"
-                           class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-slate-100 dark:hover:bg-slate-800"
-                           role="menuitem">Connexion</a>
-                        <a href="{{ path('app_register') }}"
-                           class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-slate-100 dark:hover:bg-slate-800"
-                           role="menuitem">Inscription</a>
-                    {% endif %}
-
+                           class="user-dropdown-menu-item">
+                            {{ icon('log-out') }}
+                            <span>Déconnexion</span>
+                        </a>
+                    </div>
                 </div>
             </div>
-
+            {% else %}
+            <a href="{{ path('app_login') }}"
+               class="text-base font-medium btn-link text-primary-600 sm:hidden hover:text-primary-600 hover:underline">
+                Espace membre
+            </a>
+            <a href="{{ path('app_login') }}"
+               class="hidden text-base font-medium btn-link text-primary-600 sm:block hover:text-primary-600 underline-offset-4">
+                Connexion
+            </a>
+            <a href="{{ path('app_register') }}"
+               class="hidden text-base font-medium sm:block bg-primary-400/20 text-primary-600 px-4 py-2 rounded-md hover:bg-primary-400/10">
+                Créer un compte
+            </a>
+            {% endif %}
         </div>
     </div>
 </header>
