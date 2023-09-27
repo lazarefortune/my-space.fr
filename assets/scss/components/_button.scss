@@ -14,7 +14,7 @@
 
 /* Taille pour des textes courts et des icônes petites */
 .btn-md {
-  @apply px-5 py-2 text-base btn-base;
+  @apply px-5 py-2 text-lg btn-base;
 }
 
 .btn-md > i {

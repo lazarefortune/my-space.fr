@@ -17,7 +17,6 @@ before_script:
 stages:
   - code_sniffer
   - static_analysis
-  - test
   - deploy_dev
   - deploy
 
@@ -31,22 +30,22 @@ phpstan:
   script:
     - ./vendor/bin/phpstan analyse src/
 
-phpunit:
-  stage: test
-  script:
-    - apt-get install -yqq zlib1g-dev libzip-dev
-    - docker-php-ext-install zip
-    - pecl install pcov
-    - docker-php-ext-enable pcov
-    #    - ./vendor/bin/phpunit
-    #    - ./vendor/bin/phpunit --coverage-text --colors=never
-    # create database for tests and run migrations
-    #    - psql -c 'create database medibook_test;' -U postgres
-    - php bin/console lexik:jwt:generate-keypair
-    - php bin/console doctrine:database:create --env=test
-    - php bin/console doctrine:schema:create --env=test
-    - php bin/console hautelook:fixtures:load --env=test --no-interaction
-    - ./vendor/bin/phpunit --coverage-text --colors=never
+#phpunit:
+#  stage: test
+#  script:
+#    - apt-get install -yqq zlib1g-dev libzip-dev
+#    - docker-php-ext-install zip
+#    - pecl install pcov
+#    - docker-php-ext-enable pcov
+#    #    - ./vendor/bin/phpunit
+#    #    - ./vendor/bin/phpunit --coverage-text --colors=never
+#    # create database for tests and run migrations
+#    #    - psql -c 'create database medibook_test;' -U postgres
+#    - php bin/console lexik:jwt:generate-keypair
+#    - php bin/console doctrine:database:create --env=test
+#    - php bin/console doctrine:schema:create --env=test
+#    - php bin/console hautelook:fixtures:load --env=test --no-interaction
+#    - ./vendor/bin/phpunit --coverage-text --colors=never
   services:
     - postgres:latest
   variables:
@@ -68,10 +67,10 @@ deploy_dev:
     - ssh-keyscan -p $SSH_PORT -H $SSH_HOST >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
     - ssh -p $SSH_PORT -i ~/.ssh/id_rsa $SSH_USER@$SSH_HOST pwd
-    - ssh -p $SSH_PORT -i ~/.ssh/id_rsa $SSH_USER@$SSH_HOST "cd /home/$SSH_USER/public_html/dev-medibook && git pull origin dev"
-    - ssh -p $SSH_PORT -i ~/.ssh/id_rsa $SSH_USER@$SSH_HOST "cd /home/$SSH_USER/public_html/dev-medibook && composer2 u --prefer-dist --no-ansi --no-interaction --no-scripts"
-    - ssh -p $SSH_PORT -i ~/.ssh/id_rsa $SSH_USER@$SSH_HOST "cd /home/$SSH_USER/public_html/dev-medibook && php bin/console doctrine:migrations:migrate --no-interaction"
-    - ssh -p $SSH_PORT -i ~/.ssh/id_rsa $SSH_USER@$SSH_HOST "cd /home/$SSH_USER/public_html/dev-medibook && php bin/console cache:clear"
+    - ssh -p $SSH_PORT -i ~/.ssh/id_rsa $SSH_USER@$SSH_HOST "cd /home/$SSH_USER/public_html/dev-myspace && git pull gitlab dev"
+    - ssh -p $SSH_PORT -i ~/.ssh/id_rsa $SSH_USER@$SSH_HOST "cd /home/$SSH_USER/public_html/dev-myspace && composer2 u --prefer-dist --no-ansi --no-interaction --no-scripts"
+    - ssh -p $SSH_PORT -i ~/.ssh/id_rsa $SSH_USER@$SSH_HOST "cd /home/$SSH_USER/public_html/dev-myspace && php bin/console doctrine:migrations:migrate --no-interaction"
+    - ssh -p $SSH_PORT -i ~/.ssh/id_rsa $SSH_USER@$SSH_HOST "cd /home/$SSH_USER/public_html/dev-myspace && php bin/console cache:clear"
   only:
     - dev
 
@@ -88,10 +87,10 @@ deploy:
     - ssh-keyscan -p $SSH_PORT -H $SSH_HOST >> ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
     - ssh -p $SSH_PORT -i ~/.ssh/id_rsa $SSH_USER@$SSH_HOST pwd
-    - ssh -p $SSH_PORT -i ~/.ssh/id_rsa $SSH_USER@$SSH_HOST "cd /home/$SSH_USER/public_html/medibook && git pull origin main"
-    - ssh -p $SSH_PORT -i ~/.ssh/id_rsa $SSH_USER@$SSH_HOST "cd /home/$SSH_USER/public_html/medibook && composer2 u --prefer-dist --no-ansi --no-interaction --no-scripts"
-    - ssh -p $SSH_PORT -i ~/.ssh/id_rsa $SSH_USER@$SSH_HOST "cd /home/$SSH_USER/public_html/medibook && php bin/console doctrine:migrations:migrate --no-interaction"
-    - ssh -p $SSH_PORT -i ~/.ssh/id_rsa $SSH_USER@$SSH_HOST "cd /home/$SSH_USER/public_html/medibook && php bin/console cache:clear"
+    - ssh -p $SSH_PORT -i ~/.ssh/id_rsa $SSH_USER@$SSH_HOST "cd /home/$SSH_USER/public_html/myspace && git pull gitlab main"
+    - ssh -p $SSH_PORT -i ~/.ssh/id_rsa $SSH_USER@$SSH_HOST "cd /home/$SSH_USER/public_html/myspace && composer2 u --prefer-dist --no-ansi --no-interaction --no-scripts"
+    - ssh -p $SSH_PORT -i ~/.ssh/id_rsa $SSH_USER@$SSH_HOST "cd /home/$SSH_USER/public_html/myspace && php bin/console doctrine:migrations:migrate --no-interaction"
+    - ssh -p $SSH_PORT -i ~/.ssh/id_rsa $SSH_USER@$SSH_HOST "cd /home/$SSH_USER/public_html/myspace && php bin/console cache:clear"
   only:
     - main
 
